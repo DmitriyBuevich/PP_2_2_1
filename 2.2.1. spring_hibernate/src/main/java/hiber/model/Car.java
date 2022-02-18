@@ -19,7 +19,9 @@ public class Car {
     @Column(name = "model")
     private String model;
 
-    @OneToOne(mappedBy = "car")
+    @OneToOne(mappedBy = "car",
+            cascade = CascadeType.ALL,
+    fetch = FetchType.LAZY)
     private User user;
 
     public Car() {
@@ -29,7 +31,6 @@ public class Car {
         this.series = series;
         this.model = model;
     }
-
 
 
     public Long getId() {
@@ -69,11 +70,11 @@ public class Car {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return series == car.series && Objects.equals(model, car.model) && Objects.equals(user, car.user);
+        return series == car.series && Objects.equals(model, car.model);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(series, model, user);
+        return Objects.hash(series, model);
     }
 }
